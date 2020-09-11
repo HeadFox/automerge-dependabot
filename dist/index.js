@@ -26,7 +26,7 @@ async function run() {
     })
     await octokit.pulls.merge({
       owner: base.user.login,
-      repo: base.repo.url,
+      repo: base.repo.html_url,
       pull_number: number,
     })
   }
