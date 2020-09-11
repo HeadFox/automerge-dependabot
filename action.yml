@@ -1,4 +1,4 @@
-name: 'Wait'
+name: 'automerge-dependabot'
 description: 'Wait a designated number of milliseconds'
 inputs:
   repo-token: 
