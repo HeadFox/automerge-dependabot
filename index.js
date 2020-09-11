@@ -12,9 +12,8 @@ async function run() {
     console.log(github.context.payload)
     // You can also pass in additional options as a second parameter to getOctokit
     // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
-    console.log(labels.some(({name}) => name === "automerge"))
   if(labels.some(({name}) => name === "automerge")) {
-
+    console.log(await octokit.pulls.get({pull_number: number}))
     await octokit.pulls.merge({
       pull_number: number,
     })
