@@ -9,6 +9,7 @@ async function run() {
 
     const octokit = github.getOctokit(myToken)
     const { labels, number } = github.context.payload.pull_request;
+    console.log(github.context.payload)
     // You can also pass in additional options as a second parameter to getOctokit
     // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
     console.log(labels)
