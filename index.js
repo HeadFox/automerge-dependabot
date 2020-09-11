@@ -12,6 +12,11 @@ async function run() {
     // You can also pass in additional options as a second parameter to getOctokit
     // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
   if(labels.some(({name}) => name === "automerge")) {
+    console.log({
+      owner: base.user.login,
+      repo: base.repo.url,
+      pull_number: number,
+    })
     await octokit.pulls.merge({
       owner: base.user.login,
       repo: base.repo.url,
