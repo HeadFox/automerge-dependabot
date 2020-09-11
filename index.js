@@ -9,9 +9,17 @@ async function run() {
 
     const octokit = github.getOctokit(myToken)
 
+    const { labels, number } = github.context.pull_request;
     // You can also pass in additional options as a second parameter to getOctokit
     // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
-    console.log(github.context)
+    console.log(labels);
+    
+  if(labels.contains('automerge')) {
+
+    await octokit.pulls.merge({
+      pull_number: number,
+    })
+  }
 
     // const { data: pullRequest } = await octokit.pulls.get({
     //     owner: 'octokit',
