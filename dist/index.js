@@ -13,6 +13,8 @@ const github = __webpack_require__(438);
 // most @actions toolkit packages have async methods
 async function run() {
   try {
+    const myToken = core.getInput('repo-token');
+    console.log(myToken)
     const ms = core.getInput('milliseconds');
     core.info(`Waiting ${ms} milliseconds ...`);
 
