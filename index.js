@@ -8,14 +8,11 @@ async function run() {
     const myToken = core.getInput('repo-token');
 
     const octokit = github.getOctokit(myToken)
-
-  console.log(github)
-    const { labels, number } = github.context.pull_request;
+    const { labels, number } = github.context.payload.pull_request;
     // You can also pass in additional options as a second parameter to getOctokit
     // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
-    console.log(labels);
     
-  if(labels.contains('automerge')) {
+  if(labels.includes('automerge')) {
 
     await octokit.pulls.merge({
       pull_number: number,

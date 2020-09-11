@@ -1,25 +1,13 @@
-name: "units-test"
-on:
-  pull_request:
-  push:
-    branches:
-      - main
-      - 'releases/*'
+on: [pull_request]
 
 jobs:
-  # unit tests
-  units:
+  hello_world_job:
     runs-on: ubuntu-latest
+    name: A job to say hello
     steps:
     - uses: actions/checkout@v2
-    - run: npm ci
-    - run: npm test
-
-  # test action works running from the graph
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: ./
+    - name: Hello world action step
+      id: hello
+      uses: HeadFox/automerge-dependabot@main
       with:
-        milliseconds: 1000
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
