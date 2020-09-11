@@ -1,5 +1,4 @@
 const core = require('@actions/core');
-const wait = require('./wait');
 const github = require('@actions/github');
 
 
@@ -7,15 +6,23 @@ const github = require('@actions/github');
 async function run() {
   try {
     const myToken = core.getInput('repo-token');
-    console.log(myToken)
-    const ms = core.getInput('milliseconds');
-    core.info(`Waiting ${ms} milliseconds ...`);
 
-    core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    await wait(parseInt(ms));
-    core.info((new Date()).toTimeString());
+    const octokit = github.getOctokit(myToken)
 
-    core.setOutput('time', new Date().toTimeString());
+    // You can also pass in additional options as a second parameter to getOctokit
+    // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
+    console.log(github.context)
+
+    // const { data: pullRequest } = await octokit.pulls.get({
+    //     owner: 'octokit',
+    //     repo: 'rest.js',
+    //     pull_number: 123,
+    //     mediaType: {
+    //       format: 'diff'
+    //     }
+    // });
+    // console.log(pullRequest)
+
   } catch (error) {
     core.setFailed(error.message);
   }

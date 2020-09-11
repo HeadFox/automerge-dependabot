@@ -6,7 +6,6 @@ require('./sourcemap-register.js');module.exports =
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 const core = __webpack_require__(186);
-const wait = __webpack_require__(258);
 const github = __webpack_require__(438);
 
 
@@ -14,15 +13,23 @@ const github = __webpack_require__(438);
 async function run() {
   try {
     const myToken = core.getInput('repo-token');
-    console.log(myToken)
-    const ms = core.getInput('milliseconds');
-    core.info(`Waiting ${ms} milliseconds ...`);
 
-    core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    await wait(parseInt(ms));
-    core.info((new Date()).toTimeString());
+    const octokit = github.getOctokit(myToken)
 
-    core.setOutput('time', new Date().toTimeString());
+    // You can also pass in additional options as a second parameter to getOctokit
+    // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
+    console.log(github.context)
+
+    // const { data: pullRequest } = await octokit.pulls.get({
+    //     owner: 'octokit',
+    //     repo: 'rest.js',
+    //     pull_number: 123,
+    //     mediaType: {
+    //       format: 'diff'
+    //     }
+    // });
+    // console.log(pullRequest)
+
   } catch (error) {
     core.setFailed(error.message);
   }
@@ -5760,23 +5767,6 @@ function wrappy (fn, cb) {
     return ret
   }
 }
-
-
-/***/ }),
-
-/***/ 258:
-/***/ ((module) => {
-
-let wait = function (milliseconds) {
-  return new Promise((resolve) => {
-    if (typeof milliseconds !== 'number') {
-      throw new Error('milliseconds not a number');
-    }
-    setTimeout(() => resolve("done!"), milliseconds)
-  });
-};
-
-module.exports = wait;
 
 
 /***/ }),
