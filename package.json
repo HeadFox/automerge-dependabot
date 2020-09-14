@@ -2,10 +2,11 @@
   "name": "javascript-action",
   "version": "1.0.0",
   "description": "JavaScript Action Template",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "lint": "eslint .",
-    "prepare": "ncc build index.js -o dist --source-map",
+    "prepare:all": "npm run prepare:automerge",
+    "prepare:automerge": "ncc build src/automerge.ts -o dist/automerge --source-map",
     "test": "jest",
     "all": "npm run lint && npm run prepare && npm run test"
   },
@@ -30,7 +31,13 @@
   },
   "devDependencies": {
     "@vercel/ncc": "^0.24.0",
-    "eslint": "^7.4.0",
-    "jest": "^26.1.0"
+    "eslint": "7.2.0",
+    "eslint-config-airbnb": "18.2.0",
+    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-jsx-a11y": "6.3.1",
+    "eslint-plugin-react": "7.20.6",
+    "eslint-plugin-react-hooks": "4.0.0",
+    "jest": "^26.1.0",
+    "prettier": "2.1.1"
   }
 }

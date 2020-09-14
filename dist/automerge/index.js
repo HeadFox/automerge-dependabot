@@ -2,50 +2,6 @@ require('./sourcemap-register.js');module.exports =
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 932:
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
-
-const core = __webpack_require__(186);
-const github = __webpack_require__(438);
-
-
-// most @actions toolkit packages have async methods
-async function run() {
-  try {
-    const myToken = core.getInput('repo-token');
-
-    const octokit = github.getOctokit(myToken)
-    const pullRequest = github.context.payload.pull_request;
-    // You can also pass in additional options as a second parameter to getOctokit
-    // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
-  if(pullRequest.labels.some(({name}) => name === "automerge")) {
-    await octokit.pulls.merge({
-      owner: pullRequest.base.repo.owner.login,
-      repo: pullRequest.base.repo.name,
-      pull_number: pullRequest.number,
-    })
-  }
-
-    // const { data: pullRequest } = await octokit.pulls.get({
-    //     owner: 'octokit',
-    //     repo: 'rest.js',
-    //     pull_number: 123,
-    //     mediaType: {
-    //       format: 'diff'
-    //     }
-    // });
-    // console.log(pullRequest)
-
-  } catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run();
-
-
-/***/ }),
-
 /***/ 351:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -3268,7 +3224,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var deprecation = __webpack_require__(481);
+var deprecation = __webpack_require__(932);
 var once = _interopDefault(__webpack_require__(223));
 
 const logOnce = once(deprecation => console.warn(deprecation));
@@ -3697,7 +3653,7 @@ function removeHook (state, name, method) {
 
 /***/ }),
 
-/***/ 481:
+/***/ 932:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -5777,6 +5733,35 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 162:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+const core = __webpack_require__(186);
+const github = __webpack_require__(438);
+// most @actions toolkit packages have async methods
+module.exports = async () => {
+    try {
+        const myToken = core.getInput('repo-token');
+        const octokit = github.getOctokit(myToken);
+        const pullRequest = github.context.payload.pull_request;
+        // You can also pass in additional options as a second parameter to getOctokit
+        // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
+        if (pullRequest.labels.some(({ name }) => name === "automerge")) {
+            await octokit.pulls.merge({
+                owner: pullRequest.base.repo.owner.login,
+                repo: pullRequest.base.repo.name,
+                pull_number: pullRequest.number,
+            });
+        }
+    }
+    catch (error) {
+        core.setFailed(error.message);
+    }
+};
+
+
+/***/ }),
+
 /***/ 877:
 /***/ ((module) => {
 
@@ -5927,7 +5912,7 @@ module.exports = require("zlib");
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(932);
+/******/ 	return __webpack_require__(162);
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map
